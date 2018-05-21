@@ -13,6 +13,7 @@ const LinkWrapper = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0px 16px;
+  margin-top: 48px;
 `;
 
 const CategoryLink = styled.div`

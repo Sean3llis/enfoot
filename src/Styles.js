@@ -11,6 +11,7 @@ export const COLORS = {
 
 export const theme = {
   linkColor: '#6427b0',
+  primary: '#6427b0',
   b300: '#333'
 }
 
@@ -18,6 +19,18 @@ export const Slat = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0px 16px;
+`;
+
+export const MobileLogo = styled.div`
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  height: 48px;
+  margin-top: 18px;
+  @media ${BREAK_POINTS.mobile} {
+    display: block;
+    text-align: center;
+  }
 `;
 
 export const Column = styled.div`
@@ -99,10 +112,11 @@ export const Badge = styled.div`
 
 const FOOTER_HEIGHT = 300;
 export const PageWrapper = styled.div`
-  color: #333;
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
   /* &:before {
     content: '';
     position: absolute;
@@ -115,6 +129,10 @@ export const PageWrapper = styled.div`
     width: 100%;
     animation: ${scatter} 1s linear infinite;
   } */
+`;
+
+export const ContentWrapper = styled.div`
+  flex: 1;
 `;
 
 export const Footer = styled.footer`

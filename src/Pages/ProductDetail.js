@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { BREAK_POINTS, Slat, stepper, ContentBlock } from '../Styles';
 import BreadCrumb from '../Components/BreadCrumb';
+import { Consumer } from '../Services/AppProvider';
+
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -15,6 +17,9 @@ const InfoWrapper = styled.div`
 const DescriptionWrapper = styled.div`
   flex: 1;
   padding: 16px;
+  @media ${BREAK_POINTS.mobile} {
+    margin-top: -100px;
+  }
 `;
 
 const Title = styled.h1`
@@ -30,6 +35,7 @@ const Subtitle = styled.h3`
 const Description = styled.div`
   flex: 1;
   margin-top: 12px;
+  margin-bottom: 48px;
 `;
 
 const ImgWrapper = styled.div`
@@ -39,6 +45,10 @@ const ImgWrapper = styled.div`
 const ImgTile = styled.img`
   transform-origin: center center;
   animation: ${stepper} 1s ease-out;
+  width: 100%;
+  @media ${BREAK_POINTS.mobile} {
+    max-width: 500px;
+  }
 `;
 
 
@@ -48,22 +58,19 @@ class ProductDetail extends Component {
   state = {
     product: null
   }
-  componentDidMount() {
-    const { location: { state: { product }}} = this.props;
-    this.setState({ product });
-  }
 
-  render() { 
-    if (!this.state.product) return null;
+  renderProductDetail = (state) => {
+    const slug = this.props.match.params.slug;
+    const product = state.getProduct(slug);
+    if (!product) return null;
     const {
       acf: { title, subtitle, image, description },
-      slug,
       id,
       content
-    } = this.state.product;
+    } = product;
     return (
       <Slat>
-        <BreadCrumb crumbs={[{label: 'Products', to: '/products'}, {label: title}]} />
+        <BreadCrumb crumbs={[{ label: 'Products', to: '/products' }, { label: title }]} />
         <InfoWrapper>
           <ImgWrapper>
             <ImgTile src={image.sizes.medium_large} alt={slug} />
@@ -75,12 +82,21 @@ class ProductDetail extends Component {
             <Subtitle>
               {subtitle}
             </Subtitle>
-            <Description dangerouslySetInnerHTML={{__html: description}} />
+            <Description dangerouslySetInnerHTML={{ __html: description }} />
           </DescriptionWrapper>
         </InfoWrapper>
-        <ContentBlock dangerouslySetInnerHTML={{__html: content.rendered}} />
+        <ContentBlock dangerouslySetInnerHTML={{ __html: content.rendered }} />
         <BreadCrumb crumbs={[{ label: 'Products', to: '/products' }, { label: title }]} />
       </Slat>
+    )
+  }
+
+  render() { 
+
+    return (
+      <Consumer>
+        {this.renderProductDetail}
+      </Consumer>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { includes } from 'lodash';
+import { includes, find } from 'lodash';
 const API_BASE = 'https://www.enfoot.com/api/wp-json/wp/v2';
 
 export const { Provider, Consumer } = React.createContext({
@@ -24,6 +24,10 @@ export class AppProvider extends Component {
     return fetch(`${API_BASE}/product`);
   }
 
+  getProduct = (slug) => {
+    return find(this.state.products, p => p.slug === slug);
+  }
+
   getCategories = () => {
     return fetch(`${API_BASE}/categories`);
   }
@@ -42,9 +46,7 @@ export class AppProvider extends Component {
       })
     }));
     this.getTags().then(res => res.json().then(tags => {
-      this.setState({
-        tags
-      })
+      this.setState({ tags })
     }));
   }
 
@@ -61,7 +63,8 @@ export class AppProvider extends Component {
   render() {
     const value = {
       ...this.state,
-      onTabClick: this.onTabClick
+      onTabClick: this.onTabClick,
+      getProduct: this.getProduct
     };
     window.state = value;
     return (

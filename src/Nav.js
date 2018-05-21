@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { partial } from 'lodash';
-import styled from 'styled-components';
-import { Slat } from './Styles';
+import styled, { keyframes } from 'styled-components';
+import { Slat, BREAK_POINTS } from './Styles';
 import EnfootLogo from './Icons/enfoot';
+
+const mobileLinkAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
 
 const StyledNav = styled.nav`
   padding: 12px 0px;
@@ -16,9 +27,75 @@ const StyledNav = styled.nav`
   align-self: center;
   position: relative;
   margin: 0 auto;
+  @media ${BREAK_POINTS.mobile} {
+    display: none;
+  }
 `;
 
-const NavLink = styled(Link)`
+const LinkWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  svg {
+    fill: #fff;
+  }
+`;
+
+const MobileNav = styled.nav`
+  display: none;
+  z-index: 25;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  @media ${BREAK_POINTS.mobile} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    pointer-events: none;
+    color: #fff;
+  }
+`;
+
+const MobileLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+  z-index: 35;
+  flex: 1;
+  margin: 12px 0px;
+  opacity: 0;
+  pointer-events: all;
+  letter-spacing: 2px;
+  text-decoration: uppercase;
+  animation: ${mobileLinkAnimation} 1s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: ${props => (props.delay + 1) * 100}ms;
+`;
+
+const MobileButton = styled.div`
+  transition: all 0.4s ease-in-out;
+  height: ${props => props.open ? 5000 : 50}px;
+  width: ${props => props.open ? 5000 : 50}px;
+  background-color: ${props => props.open ? props.theme.primary : props.theme.b300};
+  border-top-left-radius: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 30;
+  pointer-events: all;
+  span {
+    position: absolute;
+    bottom: 6px;
+    right: 12px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+`;
+
+const NavLink = styled(Link) `
   text-decoration: none;
   color: #333;
   &:focus {
@@ -41,11 +118,11 @@ const Underline = styled.span`
   transition: all 0.4s cubic-bezier(.62,0,.37,1.23);
 `;
 
-
-export default class Nav extends Component {
+class Nav extends Component {
   state = {
     offsetLeft: 0,
     offsetWidth: 0,
+    open: false
   }
 
   menu = [
@@ -80,18 +157,30 @@ export default class Nav extends Component {
     this.innerRefs[menuItem.path] = ele;
   }
 
+  toggleMobile = () => {
+    this.setState(prevState => ({ open: !prevState.open }));
+  }
+
   render() {
     return (
       <Slat>
         <StyledNav>
           {this.menu.map((menuItem, i) => {
             return (
-              <NavLink innerRef={partial(this.setup, menuItem)} key={i} to={menuItem.path} onMouseEnter={this.mouseEnter}>{menuItem.label}</NavLink>
+              <NavLink innerRef={partial(this.setup, menuItem)}  key={i} to={menuItem.path} onMouseEnter={this.mouseEnter}>{menuItem.label}</NavLink>
             );
           })}
           <Underline offsetWidth={this.state.offsetWidth} offsetLeft={this.state.offsetLeft} />
         </StyledNav>
+        <MobileNav>
+          <LinkWrapper>
+            {this.state.open && this.menu.map((menuItem, i) => <MobileLink onClick={this.toggleMobile} delay={i} key={i} to={menuItem.path}>{menuItem.label}</MobileLink> )}
+          </LinkWrapper>
+          <MobileButton onClick={this.toggleMobile} open={this.state.open}><span>{this.state.open ? 'X' : 'M'}</span></MobileButton>
+        </MobileNav>
       </Slat>
     )
   }
 }
+
+export default withRouter(Nav);

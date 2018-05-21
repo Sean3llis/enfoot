@@ -3,11 +3,15 @@ import styled from 'styled-components';
 
 const LogoWrapper = styled.div`
   padding: 0px 28px;
+  svg {
+    fill: ${props => props.theme.b300};
+  }
 `;
 
 export default class EnfootLogo extends Component {
   static defaultProps = {
     height: '22px',
+    fill: '#333'
   }
   render() {
     return (
