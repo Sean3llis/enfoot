@@ -16,7 +16,7 @@ export const theme = {
 }
 
 export const Slat = styled.div`
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0px 16px;
 `;

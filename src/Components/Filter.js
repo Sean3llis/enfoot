@@ -5,13 +5,19 @@ import { Slat } from '../Styles';
 import { Consumer } from '../Services/AppProvider';
 import ProductTile from './ProductTile';
 
-const StyledFilter = styled.div`
+const StyledFilter = styled(Slat)`
+  width: 200px;
+  text-align: right;
+`;
 
+const Title = styled.div`
+  font-size: 14px;
+  letter-spacing: 2px;
 `;
 
 const LinkWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0px 16px;
   margin-top: 48px;
 `;
@@ -39,20 +45,17 @@ class Filter extends Component {
       );
     });
   }
-  renderFilter = (productState) => {
-    return (
-      <Slat>
-        <LinkWrapper>
-          {this.renderCategories(productState)}
-        </LinkWrapper>
-      </Slat>
-    );
-  }
 
   render() { 
     return (
       <Consumer>
-        {this.renderFilter}
+        {productState => (
+          <StyledFilter>
+            <LinkWrapper>
+              {this.renderCategories(productState)}
+            </LinkWrapper>
+          </StyledFilter>
+        )}
       </Consumer>
     );
   }

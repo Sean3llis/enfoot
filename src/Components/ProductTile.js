@@ -12,13 +12,13 @@ const StyledShoeTile = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  margin-top: -40px;
+  margin-top: -80px;
   text-align: center;
 `;
 const Title = styled.div`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
-  letter-spacing: -1px;
+  letter-spacing: 2px;
   margin-bottom: 12px;
 `;
 
@@ -26,6 +26,7 @@ const Subtitle = styled.div`
   font-size: 12px;
   font-weight: normal;
   margin-bottom: 12px;
+  padding: 0px 48px;
 `;
 
 const ImgWrapper = styled.div`
@@ -35,7 +36,7 @@ const ImgWrapper = styled.div`
     img {
       transform: translateY(-6px) rotateZ(-4deg);
       &:last-child {
-        transform: translateY(10px) translateX(-10px) rotateZ(16deg);
+        transform: translateY(40px) translateX(-20px) rotateZ(16deg);
       }
     }
   }
@@ -57,8 +58,11 @@ const StyledLink = styled(Link)`
 `;
 
 export default class ProductTile extends Component {
+  state = {
+    src: null
+  }
   componentDidMount() {
-    
+    this.setState({ src: this.props.acf.image.sizes.medium_large })
   }
   render() {
     const {
@@ -66,12 +70,13 @@ export default class ProductTile extends Component {
       slug,
       id
     } = this.props;
+
     return (
       <StyledShoeTile>
         <Link to={{ pathname: `/products/${slug}`, state: { product: this.props } }}>
           <ImgWrapper>
-            <ImgTile src={image.sizes.medium_large} alt={slug} />
-            <ImgTile src={image.sizes.medium_large} alt={slug} />
+            <ImgTile src={this.state.src} alt={slug} />
+            <ImgTile src={this.state.src} alt={slug} />
           </ImgWrapper>
         </Link>
         <TitleWrapper>

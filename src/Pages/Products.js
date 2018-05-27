@@ -10,10 +10,15 @@ const StyledRow = styled(Row)`
   padding-bottom: 40px;
 `;
 
+const StyledSlat = styled(Slat)`
+  display: flex;
+  flex-direction: row;
+`;
+
 class Products extends Component {
   renderProducts = (products) => {
     return products.map((product, i) => (
-      <Column key={i} span={4}>
+      <Column key={i} span={3}>
         <ProductTile {...product} />
       </Column>
     ))
@@ -23,14 +28,14 @@ class Products extends Component {
     return (
       <Consumer>
         {productState => (
-          <Slat>
+          <StyledSlat>
             <Filter filter={productState.filter} onTagClick={productState.onTagClick} />
             <StyledRow>
               {this.renderProducts(productState.products)}
               {this.renderProducts(productState.products)}
               {this.renderProducts(productState.products)}
             </StyledRow>
-          </Slat>
+          </StyledSlat>
         )}
       </Consumer>
     )
