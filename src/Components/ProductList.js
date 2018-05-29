@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { BREAK_POINTS } from '../Styles';
-import { Consumer } from '../Services/AppProvider';
 import ProductTile from './ProductTile';
 
 

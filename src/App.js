@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Home from './Pages/Home';
 import Play from './Pages/Play';
 import Blog from './Pages/Blog';
+import About from './Pages/About';
 import Products from './Pages/Products';
 import ProductDetail from './Pages/ProductDetail';
 import FourOhFour from './Pages/FourOhFour';
@@ -27,7 +28,7 @@ class App extends Component {
                   <Switch>
                     <Route exact path="/" component={Home}></Route>
                     <Route exact path="/play" component={Play}></Route>
-                    <Route exact path="/play" component={Products}></Route>
+                    <Route exact path="/about" component={About}></Route>
                     <Route exact path="/words" component={Blog}></Route>
                     <Route exact path="/products/:slug" component={ProductDetail}></Route>
                     <Route path="/products" component={Products}></Route>

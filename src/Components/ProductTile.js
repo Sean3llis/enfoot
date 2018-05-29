@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import VisibilitySensor from 'react-visibility-sensor';
 import { BREAK_POINTS } from '../Styles';
 
 const StyledShoeTile = styled.div`
   position: relative;
   padding: 16px;
+  height: ${props => props.height || 0}px;
+  opacity: ${props => props.visible ? 1 : 0};
+  transform: ${props => props.visible ? 'translateY(0px)' : 'translateY(-20px)'};
+  transition: all 0.6s ease-in-out;
+  transition-delay: 0.2s;
   @media ${BREAK_POINTS.mobile} {
     width: 100%;
   }
@@ -25,7 +31,6 @@ const Title = styled.div`
 const Subtitle = styled.div`
   font-size: 12px;
   font-weight: normal;
-  margin-bottom: 12px;
   padding: 0px 48px;
 `;
 
@@ -53,31 +58,63 @@ const ImgTile = styled.img`
   }
 `;
 
-const StyledLink = styled(Link)`
-
-`;
-
 export default class ProductTile extends Component {
-  state = {
-    src: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      src: null,
+      width: 0,
+      loaded: false
+    }
+    this.tile = React.createRef();
   }
-  componentDidMount() {
-    this.setState({ src: this.props.acf.image.sizes.medium_large })
-  }
-  render() {
-    const {
-      acf: { title, subtitle, image },
-      slug,
-      id
-    } = this.props;
 
+  componentDidMount() {
+    this.setState({ width: this.tile.current.offsetWidth })
+  }
+
+  requestImage = () => {
+    const img = new Image(1, 1);
+    const src = this.props.acf.image.sizes.medium_large;
+    img.src = src
+    img.onload = () => {
+      if (this.tile.current) {
+        this.setState({ loaded: true, src: src });
+      } else {
+        this.setState({ loaded: true, width: this.tile.current.offsetWidth, src: src });
+      }
+    }
+  }
+
+  renderImages = () => {
+    const {
+      acf: { title, subtitle },
+      slug
+    } = this.props;
+    if (this.state.loaded) {
+      return (
+        <ImgWrapper height={this.state.width}>
+          <ImgTile src={this.state.src} alt={slug} />
+          <ImgTile src={this.state.src} alt={slug} />
+        </ImgWrapper>
+      );
+    } else {
+      return <div>loading...</div>
+    }
+  }
+
+  renderTile = (sensor) => {
+    const {
+      acf: { title, subtitle },
+      slug
+    } = this.props;
+    if (sensor.isVisible && !this.state.loaded) {
+      this.requestImage();
+    }
     return (
-      <StyledShoeTile>
+      <StyledShoeTile visible={sensor.isVisible && this.state.loaded} height={this.state.width} innerRef={this.tile}>
         <Link to={{ pathname: `/products/${slug}`, state: { product: this.props } }}>
-          <ImgWrapper>
-            <ImgTile src={this.state.src} alt={slug} />
-            <ImgTile src={this.state.src} alt={slug} />
-          </ImgWrapper>
+          {this.renderImages()}
         </Link>
         <TitleWrapper>
           <Title>
@@ -88,6 +125,16 @@ export default class ProductTile extends Component {
           </Subtitle>
         </TitleWrapper>
       </StyledShoeTile>
+    );
+  }
+
+  render() {
+
+
+    return (
+      <VisibilitySensor partialVisibility={true} scrollCheck={true}>
+        {this.renderTile}
+      </VisibilitySensor>
     );
   }
 }

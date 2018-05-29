@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Slat, float } from '../Styles';
+import { Slat } from '../Styles';
 
 const StyledSlat = styled(Slat)`
   display: flex;
@@ -15,10 +15,6 @@ const StyledSlat = styled(Slat)`
     max-width: 800px;
     z-index: 10;
   }
-`;
-
-const Label = styled.div`
-
 `;
 
 class FourOhFour extends Component {

@@ -148,6 +148,14 @@ class Nav extends Component {
     this.updateUnderline(offsetLeft, offsetWidth);
   }
 
+  mouseLeave = (e) => {
+    const ref = this.innerRefs[this.props.location.pathname];
+    if (ref) {
+      const ele = ReactDOM.findDOMNode(ref);
+      this.updateUnderline(ele.offsetLeft, ele.offsetWidth)
+    }
+  }
+
   updateUnderline = (offsetLeft, offsetWidth) => {
     if (typeof offsetLeft !== 'number') return;
     this.setState({ offsetLeft, offsetWidth });
@@ -167,7 +175,14 @@ class Nav extends Component {
         <StyledNav>
           {this.menu.map((menuItem, i) => {
             return (
-              <NavLink innerRef={partial(this.setup, menuItem)}  key={i} to={menuItem.path} onMouseEnter={this.mouseEnter}>{menuItem.label}</NavLink>
+              <NavLink
+                key={i}
+                innerRef={partial(this.setup, menuItem)} 
+                to={menuItem.path}
+                onMouseLeave={this.mouseLeave}
+                onMouseEnter={this.mouseEnter}>
+                {menuItem.label}
+              </NavLink>
             );
           })}
           <Underline offsetWidth={this.state.offsetWidth} offsetLeft={this.state.offsetLeft} />

@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { partial, includes } from 'lodash';
+import { partial } from 'lodash';
 import { Slat } from '../Styles';
 import { Consumer } from '../Services/AppProvider';
-import ProductTile from './ProductTile';
 
 const StyledFilter = styled(Slat)`
   width: 200px;
   text-align: right;
 `;
 
-const Title = styled.div`
-  font-size: 14px;
-  letter-spacing: 2px;
-`;
-
 const LinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: right;
   padding: 0px 16px;
   margin-top: 48px;
 `;
@@ -25,12 +20,12 @@ const LinkWrapper = styled.div`
 const CategoryLink = styled.div`
   padding: 2px 6px;
   margin-right: 6px;
-  color: ${props => props.active ? props.theme.linkColor : props.theme.b300};
+  font-size: 14px;
+  font-weight: bold;
+  background-color: ${props => props.active ? props.theme.b300 : 'transparent'};
+  color: ${props => props.active ? props.theme.white : props.theme.b300};
   &:hover {
     cursor: pointer;
-  }
-  &:last-child {
-    margin-right: 0px;
   }
 `;
 

@@ -12,7 +12,8 @@ export const COLORS = {
 export const theme = {
   linkColor: '#6427b0',
   primary: '#6427b0',
-  b300: '#333'
+  b300: '#333',
+  white: '#fff'
 }
 
 export const Slat = styled.div`
@@ -116,7 +117,7 @@ export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   /* &:before {
     content: '';
     position: absolute;

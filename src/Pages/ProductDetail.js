@@ -43,8 +43,6 @@ const ImgWrapper = styled.div`
 `;
 
 const ImgTile = styled.img`
-  transform-origin: center center;
-  animation: ${stepper} 1s ease-out;
   width: 100%;
   @media ${BREAK_POINTS.mobile} {
     max-width: 500px;
@@ -65,7 +63,6 @@ class ProductDetail extends Component {
     if (!product) return null;
     const {
       acf: { title, subtitle, image, description },
-      id,
       content
     } = product;
     return (

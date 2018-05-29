@@ -9,6 +9,7 @@ export const { Provider, Consumer } = React.createContext({
 
 export class AppProvider extends Component {
   state = {
+    loading: true,
     allProducts: [],
     products: [],
     filterCategory: null,
@@ -37,27 +38,39 @@ export class AppProvider extends Component {
   }
   
   componentDidMount = () => {
-    this.getProducts().then( res => res.json().then( products => {
-      this.setState({ allProducts: products, products })
-    }));
-    this.getCategories().then( res => res.json().then( categories => {
-      this.setState({
-        categories
+    Promise.all([this.getProducts(), this.getCategories(), this.getTags()]).then( values => {
+      Promise.all([values[0].json(), values[1].json(), values[2].json()]).then(parsedValues => {
+        this.setState({
+          allProducts: parsedValues[0],
+          products: parsedValues[0],
+          categories: parsedValues[1],
+          tags: parsedValues[2]
+        });
       })
-    }));
-    this.getTags().then(res => res.json().then(tags => {
-      this.setState({ tags })
-    }));
+    })
   }
 
   onTabClick = (category) => {
-    this.setState(prevState => ({
-      products: prevState.allProducts.filter(product => includes(product.categories, category.id)),
-      filter: {
-        ...prevState.filter,
-        category: category.id
+    this.setState(prevState => {
+      if (category.id === prevState.filter.category) {
+        return {
+          ...prevState,
+          products: prevState.allProducts,
+          filter: {
+            ...prevState.filter,
+            category: null
+          }
+        }
+      } else {
+        return {
+          products: prevState.allProducts.filter(product => includes(product.categories, category.id)),
+          filter: {
+            ...prevState.filter,
+            category: category.id
+          }
+        }
       }
-    }));
+    });
   }
 
   render() {

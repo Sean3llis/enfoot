@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PostService } from '../Services/Posts';
 import { Slat, ContentBlock } from '../Styles';
 
-const StyledSlat = styled.div`
+const StyledSlat = styled(Slat)`
   padding: 48px 0px;
 `;
 
@@ -26,7 +26,7 @@ const Image = styled.img`
   }
 `;
 
-const StyledContentBlock = styled.div`
+const StyledContentBlock = styled(ContentBlock)`
   position: relative;
   background-color: #fff;
   padding: 48px;
@@ -43,7 +43,7 @@ const Outline = styled.div`
   bottom: 30px;
 `;
 
-class Blob extends Component {
+class Blog extends Component {
   state = {
     posts: []
   }
@@ -74,4 +74,4 @@ class Blob extends Component {
   }
 }
  
-export default Blob;
+export default Blog;
