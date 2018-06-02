@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { BREAK_POINTS, Slat, stepper, ContentBlock } from '../Styles';
+import { BREAK_POINTS, Slat, ContentBlock } from '../Styles';
 import BreadCrumb from '../Components/BreadCrumb';
 import { Consumer } from '../Services/AppProvider';
 

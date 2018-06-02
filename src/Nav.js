@@ -79,7 +79,7 @@ const MobileButton = styled.div`
   transition: all 0.4s ease-in-out;
   height: ${props => props.open ? 5000 : 50}px;
   width: ${props => props.open ? 5000 : 50}px;
-  background-color: ${props => props.open ? props.theme.primary : props.theme.b300};
+  background: ${props => props.open ? props.theme.gradient : props.theme.b300};
   border-top-left-radius: 100%;
   position: absolute;
   bottom: 0;

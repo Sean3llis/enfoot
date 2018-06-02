@@ -18,10 +18,12 @@ const LinkWrapper = styled.div`
 `;
 
 const CategoryLink = styled.div`
-  padding: 2px 6px;
-  margin-right: 6px;
-  font-size: 14px;
+  padding: 6px;
+  margin-bottom: 6px;
+  font-size: 8px;
   font-weight: bold;
+  letter-spacing: 2px;
+  border: 1px solid ${props => props.theme.b300};
   background-color: ${props => props.active ? props.theme.b300 : 'transparent'};
   color: ${props => props.active ? props.theme.white : props.theme.b300};
   &:hover {

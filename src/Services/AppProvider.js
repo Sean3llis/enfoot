@@ -40,9 +40,10 @@ export class AppProvider extends Component {
   componentDidMount = () => {
     Promise.all([this.getProducts(), this.getCategories(), this.getTags()]).then( values => {
       Promise.all([values[0].json(), values[1].json(), values[2].json()]).then(parsedValues => {
+        let products = [...parsedValues[0], ...parsedValues[0], ...parsedValues[0], ...parsedValues[0]]
         this.setState({
-          allProducts: parsedValues[0],
-          products: parsedValues[0],
+          allProducts: products,
+          products: products,
           categories: parsedValues[1],
           tags: parsedValues[2]
         });

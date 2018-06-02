@@ -23,13 +23,13 @@ const StyledContentBlock = styled(ContentBlock)`
   padding: 0px 48px;
 `;
 
-const Contact = styled.div`
+// const Contact = styled.div`
 
-`;
+// `;
 
-const Description = styled.div`
+// const Description = styled.div`
 
-`;
+// `;
 
 class About extends Component {
   state = {

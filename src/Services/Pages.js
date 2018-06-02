@@ -1,4 +1,3 @@
-import React from 'react'
 const API_BASE = 'https://www.enfoot.com/api/wp-json/wp/v2';
 
 export const PageService = {

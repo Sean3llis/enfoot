@@ -1,7 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 
 export const BREAK_POINTS = {
-  mobile: '(max-width: 767px)'
+  mobile: '(max-width: 767px)',
+  tablet: '(max-width: 992px)',
 };
 
 export const COLORS = {
@@ -11,7 +12,8 @@ export const COLORS = {
 
 export const theme = {
   linkColor: '#6427b0',
-  primary: '#6427b0',
+  primary: '#665DAF',
+  gradient: 'linear-gradient(45deg, rgba(102,93,175,1) 0%, rgba(135,68,156,1) 100%);',
   b300: '#333',
   white: '#fff'
 }
@@ -35,8 +37,11 @@ export const MobileLogo = styled.div`
 `;
 
 export const Column = styled.div`
-  width: ${props => (12/props.span/12 * 100 )}%;
   padding: 0px 16px;
+  width: 33.333%;
+  @media ${BREAK_POINTS.tablet} {
+    width: 50%;
+  }
   @media ${BREAK_POINTS.mobile} {
     width: 100%;
   }
@@ -70,6 +75,39 @@ const scatter = keyframes`
   70% { background-position: 0% 15%; }
   80% { background-position: 25% 35%; }
   90% { background-position: -10% 10%; }
+`;
+
+export const FadeRightIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px)
+  }
+`;
+
+export const FadeRightOut = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(20px)
+  }
+`;
+
+export const pulse = keyframes`
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);;
+  }
 `;
 
 export const stepper = keyframes`
@@ -134,6 +172,7 @@ export const PageWrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   flex: 1;
+  position: relative;
 `;
 
 export const Footer = styled.footer`
