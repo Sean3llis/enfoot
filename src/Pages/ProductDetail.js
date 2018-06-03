@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { BREAK_POINTS, Slat, ContentBlock } from '../Styles';
+import { Link } from 'react-router-dom';
+import { BREAK_POINTS, Slat, ContentBlock, BackgroundImage } from '../Styles';
 import BreadCrumb from '../Components/BreadCrumb';
 import { Consumer } from '../Services/AppProvider';
 
-
 const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   @media ${BREAK_POINTS.mobile} {
     flex-direction: column;
   }
@@ -17,18 +14,23 @@ const InfoWrapper = styled.div`
 const DescriptionWrapper = styled.div`
   flex: 1;
   padding: 16px;
-  @media ${BREAK_POINTS.mobile} {
-    margin-top: -100px;
-  }
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 100px;
+`;
+
+const BackLink = styled(Link)`
+  display: block;
+  margin: 8px 0px;
 `;
 
 const Title = styled.h1`
   font-weight: bold;
-  font-size: 22px;
+  font-size: 16px;
 `;
 
-const Subtitle = styled.h3`
-  border-bottom: 1px solid black;
+const Subtitle = styled.div`
+  font-size: 12px;
   padding-bottom: 6px;
 `;
 
@@ -40,6 +42,12 @@ const Description = styled.div`
 
 const ImgWrapper = styled.div`
   flex: 1;
+  max-width: 400px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  margin: auto;
 `;
 
 const ImgTile = styled.img`
@@ -49,29 +57,49 @@ const ImgTile = styled.img`
   }
 `;
 
+const HeroWrapper = BackgroundImage.extend`
+  height: 300px;
+  width: 100%;
+`;
 
-
+const HeroMock = styled.div`
+  height: 300px;
+  width: 100%;
+  background-color: ${props => props.theme.primary};
+`;
 
 class ProductDetail extends Component {
   state = {
     product: null
   }
 
+  renderBackground = (background_image, title) => {
+    if (!background_image) {
+      return <HeroMock></HeroMock>
+    }
+    return (
+      <HeroWrapper src={background_image.sizes.large}>
+        <Title>{title}</Title>
+      </HeroWrapper>
+    );
+  }
+
   renderProductDetail = (state) => {
     const slug = this.props.match.params.slug;
     const product = state.getProduct(slug);
-    if (!product) return null;
+    if (!product) return;
     const {
-      acf: { title, subtitle, image, description },
+      acf: { title, subtitle, image, description, background_image},
       content
     } = product;
     return (
       <Slat>
-        <BreadCrumb crumbs={[{ label: 'Products', to: '/products' }, { label: title }]} />
+        {this.renderBackground(background_image, title)}
+        <ImgWrapper>
+          <ImgTile src={image.sizes.medium_large} alt={slug} />
+        </ImgWrapper>
         <InfoWrapper>
-          <ImgWrapper>
-            <ImgTile src={image.sizes.medium_large} alt={slug} />
-          </ImgWrapper>
+          <BackLink to="/discover">Back to Products</BackLink>
           <DescriptionWrapper>
             <Title>
               {title}
@@ -89,7 +117,6 @@ class ProductDetail extends Component {
   }
 
   render() { 
-
     return (
       <Consumer>
         {this.renderProductDetail}

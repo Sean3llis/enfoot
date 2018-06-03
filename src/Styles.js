@@ -11,7 +11,7 @@ export const COLORS = {
 }
 
 export const theme = {
-  linkColor: '#6427b0',
+  linkColor: '#665DAF',
   primary: '#665DAF',
   gradient: 'linear-gradient(45deg, rgba(102,93,175,1) 0%, rgba(135,68,156,1) 100%);',
   b300: '#333',
@@ -22,6 +22,12 @@ export const Slat = styled.div`
   max-width: 1600px;
   margin: 0 auto;
   padding: 0px 16px;
+`;
+
+export const BackgroundImage = styled.div`
+  background-image: url(${props => props.src});
+  background-size: cover;
+  background-position: center center;
 `;
 
 export const MobileLogo = styled.div`

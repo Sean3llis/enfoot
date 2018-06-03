@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import VisibilitySensor from 'react-visibility-sensor';
-import { BREAK_POINTS, FadeRightIn, FadeRightOut } from '../Styles';
+import { BREAK_POINTS } from '../Styles';
 
 const StyledShoeTile = styled.div`
   position: relative;
@@ -92,7 +92,6 @@ export default class ProductTile extends Component {
   }
 
   handleVisibilityChange = (isVisible) => {
-    console.log('isVisible ~~>', isVisible);
     this.setState({ isVisible });
   }
 
@@ -104,7 +103,7 @@ export default class ProductTile extends Component {
     if (!this.state.loaded && this.state.isVisible) this.requestImage();
     return (
       <StyledShoeTile offset={this.state.offset} visible={this.state.isVisible}>
-        <Link to={{ pathname: `/products/${slug}`, state: { product: this.props } }}>
+        <Link to={{ pathname: `/discover/${slug}`, state: { product: this.props } }}>
           {this.renderImages()}
           <TitleWrapper offset={this.state.offset} visible={this.state.isVisible}>
           <Title>
@@ -115,7 +114,7 @@ export default class ProductTile extends Component {
           </Subtitle>
         </TitleWrapper>
         </Link>
-        <VisibilitySensor onChange={this.handleVisibilityChange} partialVisibility={true} scrollCheck={true} />
+        <VisibilitySensor offset={{ bottom: -100 }} onChange={this.handleVisibilityChange} partialVisibility={true} scrollCheck={true} />
       </StyledShoeTile>
     );
   }

@@ -127,7 +127,7 @@ class Nav extends Component {
 
   menu = [
     { path: '/about', label: 'About' },
-    { path: '/products', label: 'Discover' },
+    { path: '/discover', label: 'Discover' },
     { path: '/', label: <StyledLogo /> },
     { path: '/words', label: 'Words' },
     { path: '/play', label: 'Play' }

@@ -15,6 +15,11 @@ export const PostService = {
         }))
         .catch(err => reject(err));
     })
+  },
+  getPost(slug) {
+    return new Promise((resolve, reject) => {
+      fetch(`${API_BASE}/posts`)
+    });
   }
 }
 

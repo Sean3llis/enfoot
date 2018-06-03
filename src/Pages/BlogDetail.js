@@ -35,6 +35,8 @@ const StyledContentBlock = styled(ContentBlock)`
   padding: 16px;
   font-size: 10px;
   z-index: 10;
+  transform: translateY(25%);
+  background-color: #fff;
 `;
 
 const Outline = styled.div`
@@ -77,7 +79,7 @@ class Blog extends Component {
       return (
         <PostTile key={`${post.slug}-${i}`}>
           <Link to={{ pathname: `/words/${'lol'}`}}>
-          <Parallax strength={100} bgImage={imageSrc} bgImageAlt={imageAlt}>
+          <Parallax bgStyle={{'background-size': 'contain'}} strength={100} bgImage={imageSrc} bgImageAlt={imageAlt}>
             <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
           </Parallax>
           </Link>

@@ -7,6 +7,7 @@ import Blog from './Pages/Blog';
 import About from './Pages/About';
 import Products from './Pages/Products';
 import ProductDetail from './Pages/ProductDetail';
+import BlogDetail from './Pages/BlogDetail';
 import FourOhFour from './Pages/FourOhFour';
 import Nav from './Nav';
 import { PageWrapper, Footer, theme, MobileLogo, ContentWrapper } from './Styles';
@@ -32,8 +33,9 @@ class App extends Component {
                     <Route exact path="/play" component={Play}></Route>
                     <Route exact path="/about" component={About}></Route>
                     <Route exact path="/words" component={Blog}></Route>
-                    <Route exact path="/products/:slug" component={ProductDetail}></Route>
-                    <Route path="/products" component={Products}></Route>
+                    <Route exact path="/words/:slug" component={BlogDetail}></Route>
+                    <Route exact path="/discover/:slug" component={ProductDetail}></Route>
+                    <Route path="/discover" component={Products}></Route>
                     <Route path="/" component={FourOhFour}></Route>
                   </Switch>
                 </ContentWrapper>

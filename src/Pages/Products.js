@@ -5,7 +5,6 @@ import { Consumer } from '../Services/AppProvider';
 import Filter from '../Components/Filter';
 import ProductTile from '../Components/ProductTile';
 import LoadingIcon from '../Components/LoadingIcon';
-import Naner from '../Components/Naner';
 
 const StyledRow = styled(Row)`
   padding-bottom: 40px;

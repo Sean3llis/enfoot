@@ -29,6 +29,10 @@ export class AppProvider extends Component {
     return find(this.state.products, p => p.slug === slug);
   }
 
+  getPost = (slug) => {
+    return find(this.state.posts, p => p.slug === slug);
+  }
+
   getCategories = () => {
     return fetch(`${API_BASE}/categories`);
   }
