@@ -24,26 +24,12 @@ const LoadingWrapper = styled.div`
   right: 0;
 `;
 
-const NoShoes = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  font-size: 24px;
-  width: 100%;
-  height: 100vh;
-`;
-
 const StyledSlat = styled(Slat)`
   display: flex;
   flex-direction: row;
   @media ${BREAK_POINTS.mobile} {
     flex-direction: column;
   }
-`;
-
-const NanerWrapper = styled.div`
-  
 `;
 
 class Products extends Component {

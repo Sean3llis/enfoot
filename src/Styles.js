@@ -14,7 +14,7 @@ export const theme = {
   linkColor: '#665DAF',
   primary: '#665DAF',
   gradient: 'linear-gradient(45deg, rgba(102,93,175,1) 0%, rgba(135,68,156,1) 100%);',
-  b300: '#333',
+  b300: '#3F3933',
   white: '#fff'
 }
 
@@ -28,6 +28,14 @@ export const BackgroundImage = styled.div`
   background-image: url(${props => props.src});
   background-size: cover;
   background-position: center center;
+`;
+
+export const Title = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  text-align: center;
+  color: ${props => props.theme.b300};
 `;
 
 export const MobileLogo = styled.div`
@@ -64,9 +72,10 @@ export const ContentBlock = styled.div`
   max-width: 600px;
   margin: 0 auto;
   line-height: 32px;
-  padding-bottom: 100px;
+  padding: 20px;
   font-weight: 200;
   font-size: 13px;
+  color: ${props => props.theme.b300};
 `;
 
 

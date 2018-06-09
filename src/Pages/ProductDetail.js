@@ -22,11 +22,19 @@ const DescriptionWrapper = styled.div`
 const BackLink = styled(Link)`
   display: block;
   margin: 8px 0px;
+  @media ${BREAK_POINTS.tablet} {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`
   font-weight: bold;
-  font-size: 16px;
+  font-size: 36px;
+  text-align: center;
+  color: #fff;
+  @media ${BREAK_POINTS.tablet} {
+    font-size: 22px;
+  }
 `;
 
 const Subtitle = styled.div`
@@ -58,11 +66,19 @@ const ImgTile = styled.img`
 `;
 
 const HeroWrapper = BackgroundImage.extend`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 300px;
   width: 100%;
 `;
 
 const HeroMock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 300px;
   width: 100%;
   background-color: ${props => props.theme.primary};
@@ -101,9 +117,6 @@ class ProductDetail extends Component {
         <InfoWrapper>
           <BackLink to="/discover">Back to Products</BackLink>
           <DescriptionWrapper>
-            <Title>
-              {title}
-            </Title>
             <Subtitle>
               {subtitle}
             </Subtitle>

@@ -1,61 +1,49 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Parallax, Background } from 'react-parallax';
 import { Link } from 'react-router-dom';
 import { PostService } from '../Services/Posts';
-import { Slat, ContentBlock } from '../Styles';
+import { Slat, ContentBlock, BackgroundImage, Title } from '../Styles';
 
 
 const StyledSlat = styled(Slat)`
-  padding: 48px 0px;
-`;
-
-const PostTile = styled.article`
-  padding: 16px;
-  background-color: #fff;
   position: relative;
-  margin: 24px auto 148px;
-  max-width: 800px;
-  img {
-    max-width: none;
-  }
-  .link-more {
-    display: none !important;
-    visibility: hidden;
-    opacity: 0;
-  }
 `;
 
-const Image = styled.img`
-  position: absolute;
+const StyledTitle = styled(Title)`
+  margin: 20px 0px;
 `;
 
 const StyledContentBlock = styled(ContentBlock)`
-  position: relative;
-  padding: 16px;
-  font-size: 10px;
-  z-index: 10;
-  transform: translateY(25%);
-  background-color: #fff;
+  padding: 60px 20px;
 `;
 
-const Outline = styled.div`
+const BackLink = styled(Link)`
   position: absolute;
-  z-index: 15;
-  border: 1px solid ${props => props.theme.b300};
-  left: 30px;
-  right: 30px;
-  top: 30px;
-  bottom: 30px;
+  left: 0px;
 `;
 
-class Blog extends Component {
+
+const Hero = styled(BackgroundImage)`
+  background-attachment: fixed;
+  height: 300px;
+`;
+
+class BlogDetail extends Component {
   state = {
-    posts: []
+    post: null
   }
 
   componentDidMount() {
-    PostService.getPosts().then(posts => this.setState({ posts }));
+    const {
+      location,
+      match: { params: { slug }}
+    } = this.props;
+
+    if (location.state && location.state.post) {
+      this.setState({ post: location.state.post });
+    } else {
+      PostService.getPost(slug).then(post => this.setState({ post }));
+    }
   }
 
   // renderPosts = () => {
@@ -71,30 +59,20 @@ class Blog extends Component {
   //   })
   // }
 
-  renderPosts = () => {
-    return this.state.posts.map((post, i) => {
-      console.log('post ~~>', post);
-      const imageSrc = (post.acf && post.acf.image) ? post.acf.image.sizes.medium_large : false;
-      const imageAlt = post.acf.image.alt;
-      return (
-        <PostTile key={`${post.slug}-${i}`}>
-          <Link to={{ pathname: `/words/${'lol'}`}}>
-          <Parallax bgStyle={{'background-size': 'contain'}} strength={100} bgImage={imageSrc} bgImageAlt={imageAlt}>
-            <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
-          </Parallax>
-          </Link>
-        </PostTile>
-      );
-    })
-  }
 
-  render() { 
+
+  render() {
+    const { post } = this.state;
+    if (!post) return <div>loading...</div>
     return (
       <StyledSlat>
-        {this.renderPosts()}
+        <Hero src={post.acf.image.sizes.large} />
+        <BackLink to={{ pathname: '/words' }}>Back</BackLink>
+        <StyledTitle>{post.title.rendered}</StyledTitle>
+        <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
       </StyledSlat>
     );
   }
 }
  
-export default Blog;
+export default BlogDetail;

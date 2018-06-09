@@ -1,51 +1,109 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Parallax, Background } from 'react-parallax';
+import { find } from 'lodash';
 import { Link } from 'react-router-dom';
 import { PostService } from '../Services/Posts';
-import { Slat, ContentBlock } from '../Styles';
+import { Slat, BackgroundImage, BREAK_POINTS } from '../Styles';
 
 
 const StyledSlat = styled(Slat)`
   padding: 48px 0px;
 `;
 
-const PostTile = styled.article`
-  padding: 16px;
-  background-color: #fff;
-  position: relative;
-  margin: 24px auto 148px;
-  max-width: 800px;
-  img {
-    max-width: none;
+
+const StyledPostTile = styled.article`
+  max-width: 1000px;
+  height: 400px;
+  margin: 48px auto;
+  @media ${BREAK_POINTS.tablet} {
+    padding: 0px 20px;
   }
-  .link-more {
-    display: none !important;
-    visibility: hidden;
-    opacity: 0;
+  &:nth-child(even) {
+    .tile-inner {
+      flex-direction: row-reverse;
+      @media ${BREAK_POINTS.mobile} {
+        flex-direction: column;
+      }
+    }
   }
 `;
 
-const Image = styled.img`
-  position: absolute;
-`;
-
-const StyledContentBlock = styled(ContentBlock)`
+const TileInner = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   position: relative;
-  padding: 16px;
-  font-size: 10px;
-  z-index: 10;
+  height: 100%;
+  @media ${BREAK_POINTS.tablet} {
+    width: 100%;
+    height: 400px;
+    flex-direction: column;
+  }
 `;
 
-const Outline = styled.div`
-  position: absolute;
-  z-index: 15;
-  border: 1px solid ${props => props.theme.b300};
-  left: 30px;
-  right: 30px;
-  top: 30px;
-  bottom: 30px;
+const PostImg = styled(BackgroundImage)`
+  flex: 1;
+  width: 75%;
+  background-attachment: fixed;
+  height: 100%;
+  @media ${BREAK_POINTS.mobile} {
+    width: 100%;
+  }
 `;
+
+const PostDetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  @media ${BREAK_POINTS.tablet} {
+    flex-direction: row;
+    height: 140px;
+    width: 100%;
+  }
+`;
+
+const DetailTile = styled.div`
+  background-color: #ECE8DF;
+  color: ${props => props.theme.b300};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  &:last-child {
+    background-color: #607FA0;
+    color: #ECE8DF;
+  }
+  @media ${BREAK_POINTS.mobile} {
+    width: 50%;
+  }
+`;
+
+
+class PostTile extends Component {
+
+  render() {
+    const { slug, title, acf: { image } }= this.props;
+    return (
+        <StyledPostTile>
+          <Link to={{ pathname: `/words/${slug}`, state: { post: find(this.props.posts, { slug }) } }}>
+            <TileInner className="tile-inner">
+            <PostImg src={image.sizes.large} />
+            <PostDetailWrapper>
+              <DetailTile>{title.rendered}</DetailTile>
+              <DetailTile>alfjldaksfa</DetailTile>
+            </PostDetailWrapper>
+            </TileInner>
+          </Link>
+        </StyledPostTile>
+    );
+  }
+}
 
 class Blog extends Component {
   state = {
@@ -56,34 +114,8 @@ class Blog extends Component {
     PostService.getPosts().then(posts => this.setState({ posts }));
   }
 
-  // renderPosts = () => {
-  //   return this.state.posts.map((post, i) => {
-  //     const imageSrc = (post.acf && post.acf.image) ? post.acf.image.sizes.medium_large : false; 
-  //     return (
-  //       <PostTile key={i}>
-  //         {imageSrc && <Image src={imageSrc} />}
-  //         <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
-  //         <Outline />
-  //       </PostTile>
-  //     );
-  //   })
-  // }
-
   renderPosts = () => {
-    return this.state.posts.map((post, i) => {
-      console.log('post ~~>', post);
-      const imageSrc = (post.acf && post.acf.image) ? post.acf.image.sizes.medium_large : false;
-      const imageAlt = post.acf.image.alt;
-      return (
-        <PostTile key={`${post.slug}-${i}`}>
-          <Link to={{ pathname: `/words/${'lol'}`}}>
-          <Parallax strength={100} bgImage={imageSrc} bgImageAlt={imageAlt}>
-            <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
-          </Parallax>
-          </Link>
-        </PostTile>
-      );
-    })
+    return this.state.posts.map((post, i) => <PostTile key={post.id} {...post} posts={this.state.posts} />);
   }
 
   render() { 
