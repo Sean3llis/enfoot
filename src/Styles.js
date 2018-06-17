@@ -31,6 +31,7 @@ export const BackgroundImage = styled.div`
 `;
 
 export const Title = styled.div`
+  font-family: 'Lora', serif;
   font-size: 22px;
   font-weight: bold;
   letter-spacing: -1px;

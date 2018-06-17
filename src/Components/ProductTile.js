@@ -66,7 +66,10 @@ export default class ProductTile extends Component {
   }
 
   componentDidMount() {
-    this.setState({ offset: (this.props.i % 3 + 1) * 200  });
+    const newOffset = (this.props.i % 3 + 1) * 200;
+    if (typeof newOffset === 'number') {
+      this.setState({ offset: newOffset });
+    }
   }
 
   requestImage = () => {
@@ -118,15 +121,4 @@ export default class ProductTile extends Component {
       </StyledShoeTile>
     );
   }
-
-  // render() {
-  //   return (
-  //     <div>
-
-  //     </div>
-  //     <VisibilitySensor offset={{ bottom: 200 }} partialVisibility={true} scrollCheck={true}>
-  //       {this.newRender}
-  //     </VisibilitySensor>
-  //   );
-  // }
 }

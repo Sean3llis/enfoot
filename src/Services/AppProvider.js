@@ -15,6 +15,7 @@ export class AppProvider extends Component {
     filterCategory: null,
     categories: [],
     tags: [],
+    homePage: null,
     filter: {
       category: null,
       tags: []
@@ -40,12 +41,19 @@ export class AppProvider extends Component {
   getTags = () => {
     return fetch(`${API_BASE}/tags`);
   }
+
+  loadHomePage = () => {
+    fetch(`${API_BASE}/pages/61`).then(res => res.json().then(homePage => {
+      this.setState({ homePage });
+    }));
+  }
   
   componentDidMount = () => {
-    Promise.all([this.getProducts(), this.getCategories(), this.getTags()]).then( values => {
+    Promise.all([this.getProducts(), this.getCategories(), this.getTags(), this.get]).then( values => {
       Promise.all([values[0].json(), values[1].json(), values[2].json()]).then(parsedValues => {
         let products = [...parsedValues[0], ...parsedValues[0], ...parsedValues[0], ...parsedValues[0]]
         this.setState({
+          loading: false,
           allProducts: products,
           products: products,
           categories: parsedValues[1],
@@ -82,7 +90,8 @@ export class AppProvider extends Component {
     const value = {
       ...this.state,
       onTabClick: this.onTabClick,
-      getProduct: this.getProduct
+      getProduct: this.getProduct,
+      loadHomePage: this.loadHomePage
     };
     window.state = value;
     return (

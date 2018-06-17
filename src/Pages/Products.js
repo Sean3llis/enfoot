@@ -54,7 +54,6 @@ class Products extends Component {
                 </LoadingWrapper>
               )}
               {this.renderProducts(productState.products)}
-              {/* <Naner width="100%" /> */}
             </StyledRow>
           </StyledSlat>
         )}

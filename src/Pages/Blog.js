@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { find } from 'lodash';
 import { Link } from 'react-router-dom';
+import { Consumer } from '../Services/AppProvider';
 import { PostService } from '../Services/Posts';
 import { Slat, BackgroundImage, BREAK_POINTS } from '../Styles';
 
@@ -118,12 +119,20 @@ class Blog extends Component {
     return this.state.posts.map((post, i) => <PostTile key={post.id} {...post} posts={this.state.posts} />);
   }
 
-  render() { 
+  renderBlog = (state) => {
     return (
       <StyledSlat>
         {this.renderPosts()}
       </StyledSlat>
     );
+  }
+
+  render() {
+    return (
+      <Consumer>
+        {this.renderBlog}
+      </Consumer>
+    )
   }
 }
  

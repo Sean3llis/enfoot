@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import { Slat } from '../Styles';
-import Banner from '../Components/Banner';
-import Filter from '../Components/Filter';
-import ProductList from '../Components/ProductList';
+import LinkSlider from '../Components/LinkSlider';
 import { Consumer } from '../Services/AppProvider';
 
 export default class Home extends Component {
+  componentDidMount() {
+    
+  }
   render() {
     return (
       <Consumer>
         {(productState) => {
+          if (!productState.homePage) {
+            productState.loadHomePage();
+            return <div>loading...</div>
+          }
+          console.log('productState ~~>', productState);
           return (
           <div>
-            <Slat><Banner /></Slat>
-            <Slat><Filter /></Slat>
-            <Slat><ProductList products={productState.products} /></Slat>
+            <Slat>
+              <LinkSlider slides={productState.homePage.acf.slides} />
+            </Slat>
           </div>
           );
         }}

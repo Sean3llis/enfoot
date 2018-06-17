@@ -23,13 +23,6 @@ const StyledContentBlock = styled(ContentBlock)`
   padding: 0px 48px;
 `;
 
-// const Contact = styled.div`
-
-// `;
-
-// const Description = styled.div`
-
-// `;
 
 class About extends Component {
   state = {
@@ -38,15 +31,10 @@ class About extends Component {
   };
 
   componentDidMount() {
-    PageService.getAbout().then(page => {
-      this.setState({
-        loading: false,
-        page: page.acf
-      });
-    })
+
   }
+
   render() {
-    console.log('this.state ~~>', this.state);
     return (
       <StyledSlat>
         {this.state.loading ? <div>loading...</div> : (
