@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { PageService } from '../Services/Pages';
+import { Consumer } from '../Services/AppProvider';
 import { Slat, ContentBlock, Column, Row } from '../Styles';
 
 const StyledSlat = styled(Slat) `
+
 `;
 
 const ImageWrapper = styled.div`
@@ -23,36 +24,43 @@ const StyledContentBlock = styled(ContentBlock)`
   padding: 0px 48px;
 `;
 
-
 class About extends Component {
-  state = {
-    loading: true,
-    page: null
-  };
-
-  componentDidMount() {
-
-  }
-
   render() {
+    console.log('this.props ~~>', this.props);
+    const { loading, aboutPage, loadAboutPage } = this.props;
+    if (loading) return <div>loading...</div>
+    if (!aboutPage) {
+      loadAboutPage();
+      return <div>loading...</div>
+    }
     return (
       <StyledSlat>
-        {this.state.loading ? <div>loading...</div> : (
+        {loading ? <div>loading...</div> : (
           <div>
-          <ImageWrapper src={this.state.page.hero_image.sizes.large} />
-          <StyledRow>
-            <Column span={2}>
-              <StyledContentBlock dangerouslySetInnerHTML={{ __html: this.state.page.description }} />
-            </Column>
-            <Column span={2}>
-              <StyledContentBlock dangerouslySetInnerHTML={{ __html: this.state.page.contact_info }} />
-            </Column>
-          </StyledRow>
+            <ImageWrapper src={aboutPage.acf.hero_image.sizes.large} />
+            <StyledRow>
+              <Column span={2}>
+                <StyledContentBlock dangerouslySetInnerHTML={{ __html: aboutPage.acf.description }} />
+              </Column>
+              <Column span={2}>
+                <StyledContentBlock dangerouslySetInnerHTML={{ __html: aboutPage.acf.contact_info }} />
+              </Column>
+            </StyledRow>
           </div>
         )}
-      </StyledSlat>
-    );
+      </StyledSlat>  
+    )
+  }
+}
+ 
+class AboutProvider extends Component {
+  render() {
+    return (
+      <Consumer>
+        {state => (<About {...state} />)}
+      </Consumer>
+    )
   }
 }
 
-export default About;
+export default AboutProvider;

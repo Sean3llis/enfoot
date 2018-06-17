@@ -16,6 +16,7 @@ export class AppProvider extends Component {
     categories: [],
     tags: [],
     homePage: null,
+    aboutPage: null,
     filter: {
       category: null,
       tags: []
@@ -45,6 +46,12 @@ export class AppProvider extends Component {
   loadHomePage = () => {
     fetch(`${API_BASE}/pages/61`).then(res => res.json().then(homePage => {
       this.setState({ homePage });
+    }));
+  }
+
+  loadAboutPage = () => {
+    fetch(`${API_BASE}/pages/37`).then(res => res.json().then(aboutPage => {
+      this.setState({ aboutPage });
     }));
   }
   
@@ -91,7 +98,8 @@ export class AppProvider extends Component {
       ...this.state,
       onTabClick: this.onTabClick,
       getProduct: this.getProduct,
-      loadHomePage: this.loadHomePage
+      loadHomePage: this.loadHomePage,
+      loadAboutPage: this.loadAboutPage
     };
     window.state = value;
     return (
