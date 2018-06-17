@@ -15,7 +15,6 @@ export default class Home extends Component {
             productState.loadHomePage();
             return <div>loading...</div>
           }
-          console.log('productState ~~>', productState);
           return (
           <div>
             <Slat>

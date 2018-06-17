@@ -18,6 +18,26 @@ const StyledSlide = styled.div`
 
 const BackButton = styled(ButtonBack)`
   position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translate(-20%);
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border: none;
+  color: ${props => props.theme.b300};
+`;
+
+const NextButton = styled(ButtonNext)`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translate(20%);
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border: none;
+  color: ${props => props.theme.b300};
 `;
 
 const SlideTitle = styled.div`
@@ -30,6 +50,10 @@ const SlideTitle = styled.div`
 
 const SliderWrapper = styled.div`
   margin: 0 auto;
+  padding: 0px 50px;
+  .carousel {
+    position: relative;
+  }
 `;
 
 export default class LinkSlider extends Component {
@@ -55,7 +79,8 @@ export default class LinkSlider extends Component {
           <Slider>
             {this.renderSlides()}
           </Slider>
-          <ButtonBack>akldjf</ButtonBack>
+          <BackButton>{'<'}</BackButton>
+          <NextButton>{'>'}</NextButton>
         </CarouselProvider>
       </SliderWrapper>
     );

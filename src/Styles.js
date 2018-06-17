@@ -15,7 +15,8 @@ export const theme = {
   primary: '#665DAF',
   gradient: 'linear-gradient(45deg, rgba(102,93,175,1) 0%, rgba(135,68,156,1) 100%);',
   b300: '#3F3933',
-  white: '#fff'
+  white: '#ffffff',
+  offwhite: '#f8f8f8'
 }
 
 export const Slat = styled.div`

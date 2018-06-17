@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Consumer } from '../Services/AppProvider';
-import { Slat, ContentBlock, Column, Row } from '../Styles';
+import { Slat, ContentBlock, Row } from '../Styles';
+
+const Left = styled.div`
+  width: 50%;
+`;
+
+const Right = styled.div`
+  width: 50%;
+  padding: 48px;
+  background-color: ${props => props.theme.offwhite};
+  div {
+    padding: 0;
+  }
+`;
 
 const StyledSlat = styled(Slat) `
 
@@ -26,7 +39,6 @@ const StyledContentBlock = styled(ContentBlock)`
 
 class About extends Component {
   render() {
-    console.log('this.props ~~>', this.props);
     const { loading, aboutPage, loadAboutPage } = this.props;
     if (loading) return <div>loading...</div>
     if (!aboutPage) {
@@ -39,12 +51,12 @@ class About extends Component {
           <div>
             <ImageWrapper src={aboutPage.acf.hero_image.sizes.large} />
             <StyledRow>
-              <Column span={2}>
+              <Left>
                 <StyledContentBlock dangerouslySetInnerHTML={{ __html: aboutPage.acf.description }} />
-              </Column>
-              <Column span={2}>
+              </Left>
+              <Right>
                 <StyledContentBlock dangerouslySetInnerHTML={{ __html: aboutPage.acf.contact_info }} />
-              </Column>
+              </Right>
             </StyledRow>
           </div>
         )}
