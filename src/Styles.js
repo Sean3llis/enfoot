@@ -40,6 +40,16 @@ export const Title = styled.div`
   color: ${props => props.theme.b300};
 `;
 
+export const CTA = styled.a`
+  display: block;
+  font-size: 16px;
+  padding: 4px 16px;
+  border: 1px solid ${props => props.theme.white};
+  &, &:visited {
+    color: ${props => props.color || props.theme.white};
+  }
+`;
+
 export const MobileLogo = styled.div`
   display: none;
   flex-direction: column;
@@ -78,6 +88,10 @@ export const ContentBlock = styled.div`
   font-weight: 200;
   font-size: 13px;
   color: ${props => props.theme.b300};
+  img {
+    width: 100%;
+    margin: 24px 0px;
+  }
 `;
 
 

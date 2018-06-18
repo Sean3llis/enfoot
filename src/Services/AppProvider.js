@@ -27,6 +27,12 @@ export class AppProvider extends Component {
     return fetch(`${API_BASE}/product`);
   }
 
+  getProductsByCategory = (categoryID) => {
+    return this.state.allProducts.filter(product => {
+      return product.categories.includes(categoryID);
+    });
+  }
+
   getProduct = (slug) => {
     return find(this.state.products, p => p.slug === slug);
   }
@@ -99,7 +105,8 @@ export class AppProvider extends Component {
       onTabClick: this.onTabClick,
       getProduct: this.getProduct,
       loadHomePage: this.loadHomePage,
-      loadAboutPage: this.loadAboutPage
+      loadAboutPage: this.loadAboutPage,
+      getProductsByCategory: this.getProductsByCategory
     };
     window.state = value;
     return (
