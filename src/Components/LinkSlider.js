@@ -87,6 +87,7 @@ const StyledDot = styled(Dot)`
   margin-right: 4px;
   transition: transform 0.4s ease-in-out;
   transform: skewX(-15deg) translateY(-4px);
+  user-select: none;
   &.carousel__dot--selected {
     background-color: transparent;
     border: 1px solid ${props => props.theme.white};

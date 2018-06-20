@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
+import { Link } from 'react-router-dom';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import styled from 'styled-components';
 import { BREAK_POINTS, BackgroundImage } from '../Styles';
@@ -7,13 +8,15 @@ import { BREAK_POINTS, BackgroundImage } from '../Styles';
 const SliderWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  margin: 48px auto;
+  max-width: 1200px;
 `;
 
-const CarouselWrapper = styled.div`
+const TrackWrapper = styled.div`
   position: relative;
   width: 75%;
   order: ${props => props.titlePlacement === 'left' ? 2 : 0};
-  background-color: #e9f4ff;
+  background-color: ${props => props.trackColor};
   @media ${BREAK_POINTS.tablet} {
     width: 100%;
   }
@@ -28,7 +31,7 @@ const TitleWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #607FA0;
+  background-color: ${props => props.titleColor};
   @media ${BREAK_POINTS.tablet} {
     display: none;
   }
@@ -72,13 +75,19 @@ const ProductSlide = styled(BackgroundImage)`
 
 export default class ProductSlider extends Component {
   static defaultProps = {
-    titlePlacement: 'right'
+    titlePlacement: 'right',
+    trackColor: '#e9e4df',
+    titleColor: '#ea7e3f'
   }
+
   renderSlides = () => {
     return this.props.products.map((product, i) => {
+      console.log('product ~~>', product);
       return (
         <Slide key={product.slug + i}>
-          <ProductSlide src={product.acf.image.sizes.medium} {...product} />
+          <Link to={`/discover/${product.slug}`}>
+            <ProductSlide onClick={this.handleSlideClick} src={product.acf.image.sizes.medium} {...product} />
+          </Link>
         </Slide>
       );
     })
@@ -87,7 +96,7 @@ export default class ProductSlider extends Component {
   render() {
     return (
       <SliderWrapper>
-        <CarouselWrapper titlePlacement={this.props.titlePlacement}>
+        <TrackWrapper titlePlacement={this.props.titlePlacement} trackColor={this.props.trackColor}>
         <CarouselProvider
           naturalSlideWidth={1}
           naturalSlideHeight={1}
@@ -101,8 +110,8 @@ export default class ProductSlider extends Component {
           <BackButton>{'<'}</BackButton>
           <NextButton>{'>'}</NextButton>
         </CarouselProvider>
-        </CarouselWrapper>
-        <TitleWrapper>
+        </TrackWrapper>
+        <TitleWrapper titleColor={this.props.titleColor}>
           {this.props.title}
         </TitleWrapper>
       </SliderWrapper>

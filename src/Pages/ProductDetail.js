@@ -19,9 +19,12 @@ const DescriptionWrapper = styled.div`
   padding-top: 100px;
 `;
 
-const BackLink = styled(Link)`
+const BackLink = styled.div`
   display: block;
   margin: 8px 0px;
+  &:hover {
+    cursor: pointer;
+  }
   @media ${BREAK_POINTS.tablet} {
     display: none;
   }
@@ -103,6 +106,7 @@ class ProductDetail extends Component {
   renderProductDetail = (state) => {
     const slug = this.props.match.params.slug;
     const product = state.getProduct(slug);
+    console.log('this.props ~~>', this.props);
     if (!product) return;
     const {
       acf: { title, subtitle, image, description, background_image},
@@ -115,7 +119,7 @@ class ProductDetail extends Component {
           <ImgTile src={image.sizes.medium_large} alt={slug} />
         </ImgWrapper>
         <InfoWrapper>
-          <BackLink to="/discover">Back to Products</BackLink>
+          <BackLink onClick={this.props.history.goBack}>Back to Products</BackLink>
           <DescriptionWrapper>
             <Subtitle>
               {subtitle}

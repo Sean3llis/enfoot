@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PostService } from '../Services/Posts';
-import { Slat, ContentBlock, BackgroundImage, Title } from '../Styles';
+import { Slat, ContentBlock, BackgroundImage, Title, BREAK_POINTS } from '../Styles';
 
 
 const StyledSlat = styled(Slat)`
@@ -10,11 +10,14 @@ const StyledSlat = styled(Slat)`
 `;
 
 const StyledTitle = styled(Title)`
-  margin: 20px 0px;
+  margin: 100px 0px;
+  @media ${BREAK_POINTS.tablet} {
+    margin: 60px 0px;
+  }
 `;
 
 const StyledContentBlock = styled(ContentBlock)`
-  padding: 60px 20px;
+  padding: 0px 20px 100px 20px;
 `;
 
 const BackLink = styled(Link)`
@@ -45,21 +48,6 @@ class BlogDetail extends Component {
       PostService.getPost(slug).then(post => this.setState({ post }));
     }
   }
-
-  // renderPosts = () => {
-  //   return this.state.posts.map((post, i) => {
-  //     const imageSrc = (post.acf && post.acf.image) ? post.acf.image.sizes.medium_large : false; 
-  //     return (
-  //       <PostTile key={i}>
-  //         {imageSrc && <Image src={imageSrc} />}
-  //         <StyledContentBlock dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
-  //         <Outline />
-  //       </PostTile>
-  //     );
-  //   })
-  // }
-
-
 
   render() {
     const { post } = this.state;

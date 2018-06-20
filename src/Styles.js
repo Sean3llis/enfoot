@@ -33,20 +33,30 @@ export const BackgroundImage = styled.div`
 
 export const Title = styled.div`
   font-family: 'Lora', serif;
-  font-size: 22px;
+  font-size: 42px;
   font-weight: bold;
   letter-spacing: -1px;
   text-align: center;
   color: ${props => props.theme.b300};
+  @media ${BREAK_POINTS.tablet} {
+    font-size: 36px;
+  }
+  @media ${BREAK_POINTS.mobile} {
+    font-size: 28px;
+  }
 `;
 
 export const CTA = styled.a`
   display: block;
-  font-size: 16px;
-  padding: 4px 16px;
+  font-size: 8px;
+  padding: 8px 48px;
+  letter-spacing: 2px;
+  background-color: ${props => props.theme.white};
+  text-transform: uppercase;
+  margin: 48px auto;
   border: 1px solid ${props => props.theme.white};
   &, &:visited {
-    color: ${props => props.color || props.theme.white};
+    color: ${props => props.color || props.theme.b300};
   }
 `;
 

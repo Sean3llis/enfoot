@@ -20,12 +20,12 @@ const StyledPostTile = styled.article`
     padding: 0px 20px;
   }
   &:nth-child(even) {
-    .tile-inner {
+    /* .tile-inner {
       flex-direction: row-reverse;
       @media ${BREAK_POINTS.mobile} {
         flex-direction: column;
       }
-    }
+    } */
   }
 `;
 
@@ -47,7 +47,7 @@ const PostImg = styled(BackgroundImage)`
   width: 75%;
   background-attachment: fixed;
   height: 100%;
-  @media ${BREAK_POINTS.mobile} {
+  @media ${BREAK_POINTS.tablet} {
     width: 100%;
   }
 `;
