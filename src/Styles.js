@@ -48,7 +48,7 @@ export const Title = styled.div`
 
 export const CTA = styled.a`
   display: block;
-  font-size: 8px;
+  font-size: 10px;
   padding: 8px 48px;
   letter-spacing: 2px;
   background-color: ${props => props.theme.white};
@@ -197,18 +197,6 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   width: 100vw;
   min-height: 100vh;
-  /* &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    pointer-events: none;
-    opacity: 0.8;
-    height: 100%;
-    width: 100%;
-    animation: ${scatter} 1s linear infinite;
-  } */
 `;
 
 export const ContentWrapper = styled.div`
@@ -224,6 +212,7 @@ export const Footer = styled.footer`
   right: 0;
   background-color: ${props => props.theme.b300};
   align-self: flex-end;
+  color: ${props => props.theme.white};
 `;
 
 // Animations

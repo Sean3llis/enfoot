@@ -11,7 +11,6 @@ const LogoWrapper = styled.div`
 export default class EnfootLogo extends Component {
   static defaultProps = {
     height: '22px',
-    fill: '#333'
   }
   render() {
     return (

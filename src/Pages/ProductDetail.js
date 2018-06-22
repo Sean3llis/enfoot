@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { BREAK_POINTS, Slat, ContentBlock, BackgroundImage } from '../Styles';
 import BreadCrumb from '../Components/BreadCrumb';
 import { Consumer } from '../Services/AppProvider';
+import { Helmet } from 'react-helmet';
 
 const InfoWrapper = styled.div`
   @media ${BREAK_POINTS.mobile} {
@@ -129,6 +130,10 @@ class ProductDetail extends Component {
         </InfoWrapper>
         <ContentBlock dangerouslySetInnerHTML={{ __html: content.rendered }} />
         <BreadCrumb crumbs={[{ label: 'Products', to: '/products' }, { label: title }]} />
+        <Helmet>
+          <title>{title}</title>
+          <meta/>
+        </Helmet>
       </Slat>
     )
   }
