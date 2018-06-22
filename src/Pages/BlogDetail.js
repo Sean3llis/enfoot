@@ -23,6 +23,7 @@ const StyledContentBlock = styled(ContentBlock)`
 const BackLink = styled(Link)`
   position: absolute;
   left: 0px;
+  padding: 16px;
 `;
 
 

@@ -20,7 +20,7 @@ export const theme = {
 }
 
 export const Slat = styled.div`
-  max-width: 1600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0px 16px;
 `;
@@ -102,20 +102,6 @@ export const ContentBlock = styled.div`
     width: 100%;
     margin: 24px 0px;
   }
-`;
-
-
-const scatter = keyframes`
-  0%, 100% { background-position: 0 0; }
-  10% { background-position: -5% -10%; }
-  20% { background-position: -15% 5%; }
-  30% { background-position: 7% -25%; }
-  40% { background-position: 20% 25%; }
-  50% { background-position: -25% 10%; }
-  60% { background-position: 15% 5%; }
-  70% { background-position: 0% 15%; }
-  80% { background-position: 25% 35%; }
-  90% { background-position: -10% 10%; }
 `;
 
 export const FadeRightIn = keyframes`

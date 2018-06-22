@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import { Link } from 'react-router-dom';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import styled from 'styled-components';
@@ -82,7 +82,6 @@ export default class ProductSlider extends Component {
 
   renderSlides = () => {
     return this.props.products.map((product, i) => {
-      console.log('product ~~>', product);
       return (
         <Slide key={product.slug + i}>
           <Link to={`/discover/${product.slug}`}>

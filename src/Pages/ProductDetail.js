@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { BREAK_POINTS, Slat, ContentBlock, BackgroundImage } from '../Styles';
 import BreadCrumb from '../Components/BreadCrumb';
 import { Consumer } from '../Services/AppProvider';
@@ -129,7 +128,7 @@ class ProductDetail extends Component {
           </DescriptionWrapper>
         </InfoWrapper>
         <ContentBlock dangerouslySetInnerHTML={{ __html: content.rendered }} />
-        <BreadCrumb crumbs={[{ label: 'Products', to: '/products' }, { label: title }]} />
+        <BreadCrumb crumbs={[{ label: 'Products', to: '/discover' }, { label: title }]} />
         <Helmet>
           <title>{title}</title>
           <meta/>
