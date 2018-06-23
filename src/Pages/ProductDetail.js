@@ -108,7 +108,7 @@ class ProductDetail extends Component {
     const product = state.getProduct(slug);
     if (!product) return;
     const {
-      acf: { title, subtitle, image, description, background_image},
+      acf: { title, subtitle, image, description, background_image, opengraph_description},
       content
     } = product;
     return (
@@ -130,7 +130,13 @@ class ProductDetail extends Component {
         <BreadCrumb crumbs={[{ label: 'Products', to: '/discover' }, { label: title }]} />
         <Helmet>
           <title>{title}</title>
-          <meta />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={opengraph_description} />
+          <meta property="og:type" content={'product'} />
+          <meta property="og:url" content={`https://www.enfoot.com/discover/${slug}`} />
+          <meta property="og:image" content={image.sizes.medium_large} />
+          <meta property="og:image:alt" content={image.alt} />
+          <meta property="og:site_name" content={'Enfoot'} />
         </Helmet>
       </Slat>
     )
