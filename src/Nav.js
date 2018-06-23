@@ -97,9 +97,9 @@ const MobileButton = styled.div`
 
 const NavLink = styled(Link) `
   text-decoration: none;
-  color: #333;
+  color: ${props => props.theme.b300};
   &:focus {
-    color: #333;
+    color: ${props => props.theme.b300};
   }
 `;
 

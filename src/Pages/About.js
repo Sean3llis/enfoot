@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Consumer } from '../Services/AppProvider';
-import { Slat, ContentBlock, Row } from '../Styles';
+import { Slat, ContentBlock, Row, Title } from '../Styles';
 import Loader from '../Components/Loader';
 
 const Left = styled.div`
@@ -35,7 +35,6 @@ const StyledRow = styled(Row)`
 
 const StyledContentBlock = styled(ContentBlock)`
   max-width: none;
-  padding: 0px 48px;
 `;
 
 class About extends Component {
@@ -51,6 +50,7 @@ class About extends Component {
         <ImageWrapper src={aboutPage.acf.hero_image.sizes.large} />
         <StyledRow>
           <Left>
+            <Title>About Us.</Title>
             <StyledContentBlock dangerouslySetInnerHTML={{ __html: aboutPage.acf.description }} />
           </Left>
           <Right>

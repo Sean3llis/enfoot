@@ -70,8 +70,38 @@ const NextButton = styled(ButtonNext)`
 const ProductSlide = styled(BackgroundImage)`
   height: 100%;
   width: 100%;
-  transform: rotateZ(45deg);
-`
+  transition: transform 0.4s ease-out;
+`;
+
+const StyledSlide = styled(Slide)`
+  a div:first-child {
+    transform: rotateZ(45deg) translateX(5px) translateY(5px);
+  }
+  a div:last-child {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  &:hover {
+    a div:first-child {
+      transform: rotateZ(45deg) translateX(0px) translateY(0px);
+    }
+    a div:last-child {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+`;
+
+const SlideTitle = styled.div`
+  position: absolute;
+  margin: 0 auto;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  transition: transform 0.4s ease-out, opacity 0.5s linear;
+  color: ${props => props.theme.b300};
+`;
 
 export default class ProductSlider extends Component {
   static defaultProps = {
@@ -83,11 +113,12 @@ export default class ProductSlider extends Component {
   renderSlides = () => {
     return this.props.products.map((product, i) => {
       return (
-        <Slide key={product.slug + i}>
+        <StyledSlide key={product.slug + i}>
           <Link to={`/discover/${product.slug}`}>
-            <ProductSlide onClick={this.handleSlideClick} src={product.acf.image.sizes.medium} {...product} />
+            <ProductSlide onClick={this.handleSlideClick} src={product.acf.image.sizes.medium} />
+            <SlideTitle>{product.title.rendered}</SlideTitle>
           </Link>
-        </Slide>
+        </StyledSlide>
       );
     })
   }

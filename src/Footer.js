@@ -38,8 +38,15 @@ const CopyRight = styled.div`
   left: 0;
   right: 0;
   bottom: 16px;
+  opacity: 0.75;
   text-align: center;
   font-size: 10px;
+  span {
+    display: inline-block;
+    vertical-align: baseline;
+    font-size: 20px;
+    transform: translateY(2px);
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -67,7 +74,7 @@ export default class Footer extends Component {
               <Facebook />
             </Icon>
           </IconWrapper>
-          <CopyRight>Copyright Enfoot 2018</CopyRight>
+          <CopyRight><span>©</span> Enfoot 2018</CopyRight>
         </StyledSlat>
       </StyledFooter>
     );
