@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { includes, find } from 'lodash';
+import { find } from 'lodash';
 const API_BASE = 'https://www.enfoot.com/api/wp-json/wp/v2';
 
 export const { Provider, Consumer } = React.createContext({
@@ -27,7 +27,13 @@ export class AppProvider extends Component {
     return fetch(`${API_BASE}/product`);
   }
 
-  getProductsByCategory = (categoryID) => {
+  getProductsByCategory = (category) => {
+    return this.state.allProducts.filter(product => {
+      return product.categories.includes(category.id);
+    });
+  }
+
+  getProductsByCategoryID = (categoryID) => {
     return this.state.allProducts.filter(product => {
       return product.categories.includes(categoryID);
     });
@@ -60,6 +66,14 @@ export class AppProvider extends Component {
       this.setState({ aboutPage });
     }));
   }
+
+  buildCategoryMap = (categories) => {
+    const categoryMap = {};
+    categories.forEach(category => {
+      categoryMap[category.slug] = category;
+    });
+    return categoryMap;
+  }
   
   componentDidMount = () => {
     Promise.all([this.getProducts(), this.getCategories(), this.getTags(), this.get]).then( values => {
@@ -70,43 +84,58 @@ export class AppProvider extends Component {
           allProducts: products,
           products: products,
           categories: parsedValues[1],
+          categoryMap: this.buildCategoryMap(parsedValues[1]),
           tags: parsedValues[2]
         });
       })
     })
   }
 
-  onTabClick = (category) => {
+  setCategory = (categorySlug) => {
     this.setState(prevState => {
-      if (category.id === prevState.filter.category) {
+      if (this.state.filterCategory === categorySlug || !categorySlug) {
         return {
-          ...prevState,
-          products: prevState.allProducts,
-          filter: {
-            ...prevState.filter,
-            category: null
-          }
-        }
+          filterCategory: null,
+          products: prevState.allProducts
+        };
       } else {
         return {
-          products: prevState.allProducts.filter(product => includes(product.categories, category.id)),
-          filter: {
-            ...prevState.filter,
-            category: category.id
-          }
-        }
+          filterCategory: categorySlug,
+          products: this.getProductsByCategory(this.state.categoryMap[categorySlug])
+        };
       }
-    });
+    })
+    // this.setState(prevState => {
+    //   if (category.id === prevState.filter.category) {
+    //     return {
+    //       ...prevState,
+    //       products: prevState.allProducts,
+    //       filter: {
+    //         ...prevState.filter,
+    //         category: null
+    //       }
+    //     }
+    //   } else {
+    //     return {
+    //       products: prevState.allProducts.filter(product => includes(product.categories, category.id)),
+    //       filter: {
+    //         ...prevState.filter,
+    //         category: category.id
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   render() {
     const value = {
       ...this.state,
-      onTabClick: this.onTabClick,
+      setCategory: this.setCategory,
       getProduct: this.getProduct,
       loadHomePage: this.loadHomePage,
       loadAboutPage: this.loadAboutPage,
-      getProductsByCategory: this.getProductsByCategory
+      getProductsByCategory: this.getProductsByCategory,
+      getProductsByCategoryID: this.getProductsByCategoryID
     };
     window.state = value;
     return (

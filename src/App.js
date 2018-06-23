@@ -35,6 +35,7 @@ class App extends Component {
                     <Route exact path="/about" component={About}></Route>
                     <Route exact path="/words" component={Blog}></Route>
                     <Route exact path="/words/:slug" component={BlogDetail}></Route>
+                    <Route exact path="/discover/category/:categorySlug" component={Products}></Route>
                     <Route exact path="/discover/:slug" component={ProductDetail}></Route>
                     <Route path="/discover" component={Products}></Route>
                     <Route path="/" component={FourOhFour}></Route>

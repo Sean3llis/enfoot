@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { partial } from 'lodash';
-import { Slat } from '../Styles';
+import { Link } from 'react-router-dom';
 import { Consumer } from '../Services/AppProvider';
 
-const StyledFilter = styled(Slat)`
+const StyledFilter = styled.div`
   width: 200px;
   text-align: right;
+  padding-top: 64px;
+  padding-right: 16px;
 `;
 
 const LinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: right;
-  padding: 0px 16px;
-  margin-top: 48px;
+  padding: 8px 0px;
 `;
 
-const CategoryLink = styled.div`
-  padding: 6px;
-  margin-bottom: 6px;
-  font-size: 8px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border: 1px solid ${props => props.theme.b300};
-  background-color: ${props => props.active ? props.theme.b300 : 'transparent'};
-  color: ${props => props.active ? props.theme.white : props.theme.b300};
+const StyledLink = styled(Link)`
+  font-size: 12px;
+  line-height: 24px;
   &:hover {
     cursor: pointer;
   }
+`;
+
+const LinkTitle = styled.div`
+  font-family: 'Lora', sans-serif;
+  font-size: 16px;
+  line-height: 32px;
+  letter-spacing: -1px;
+  font-weight: bold;
+  color: ${props => props.theme.b300};
 `;
 
 class Filter extends Component {
   renderCategories = (productState) => {
     return productState.categories.map((category, i) => {
       return (
-        <CategoryLink
-          key={i}
-          active={productState.filter.category === category.id}
-          onClick={partial(productState.onTabClick, category)}>{category.name}</CategoryLink>
+        <StyledLink key={i} to={`/discover/category/${category.slug}`}>
+          {category.name}
+        </StyledLink>
       );
     });
   }
@@ -48,6 +50,7 @@ class Filter extends Component {
       <Consumer>
         {productState => (
           <StyledFilter>
+            <LinkTitle>Categories</LinkTitle>
             <LinkWrapper>
               {this.renderCategories(productState)}
             </LinkWrapper>

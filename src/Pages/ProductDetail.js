@@ -106,7 +106,6 @@ class ProductDetail extends Component {
   renderProductDetail = (state) => {
     const slug = this.props.match.params.slug;
     const product = state.getProduct(slug);
-    console.log('this.props ~~>', this.props);
     if (!product) return;
     const {
       acf: { title, subtitle, image, description, background_image},
@@ -131,7 +130,7 @@ class ProductDetail extends Component {
         <BreadCrumb crumbs={[{ label: 'Products', to: '/discover' }, { label: title }]} />
         <Helmet>
           <title>{title}</title>
-          <meta/>
+          <meta />
         </Helmet>
       </Slat>
     )

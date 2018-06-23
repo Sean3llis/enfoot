@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { partial } from 'lodash';
 import VisibilitySensor from 'react-visibility-sensor';
 import { BREAK_POINTS } from '../Styles';
 
@@ -67,31 +68,37 @@ export default class ProductTile extends Component {
 
   componentDidMount() {
     const newOffset = (this.props.i % 3 + 1) * 200;
+    this.requestImage();
     if (typeof newOffset === 'number') {
       this.setState({ offset: newOffset });
     }
   }
 
+  componentWillUnmount() {
+    if (!this.img) return;
+    this.img.onload = () => {};
+  }
+
+  handleLoad = (src) => {
+    this.setState({ loaded: true, src: src });
+  }
+
   requestImage = () => {
     if (this.state.loaded) return;
-    const img = new Image(1, 1);
+    this.img = new Image(1, 1);
     const src = this.props.acf.image.sizes.medium_large;
-    img.src = src
-    img.onload = () => {
-        this.setState({ loaded: true, src: src });
-      }
+    this.img.src = src
+    this.img.onload = partial(this.handleLoad, src);
     }
 
   renderImages = () => {
     const { slug } = this.props;
-    if (this.state.loaded) {
-      return (
-        <ImgWrapper offset={this.state.offset} visible={this.state.isVisible}>
-          <ImgTile src={this.state.src} alt={slug} />
-          <ImgTile src={this.state.src} alt={slug} />
-        </ImgWrapper>
-      );
-    }
+    return (
+      <ImgWrapper offset={this.state.offset} visible={this.state.isVisible}>
+        <ImgTile src={this.state.src} alt={slug} />
+        <ImgTile src={this.state.src} alt={slug} />
+      </ImgWrapper>
+    );
   }
 
   handleVisibilityChange = (isVisible) => {
@@ -103,7 +110,10 @@ export default class ProductTile extends Component {
       acf: { title, subtitle },
       slug
     } = this.props;
-    if (!this.state.loaded && this.state.isVisible) this.requestImage();
+    if (!this.state.loaded && this.state.isVisible) {
+      this.requestImage();
+      return <div>loading...</div>
+    }
     return (
       <StyledShoeTile offset={this.state.offset} visible={this.state.isVisible}>
         <Link to={{ pathname: `/discover/${slug}`, state: { product: this.props } }}>

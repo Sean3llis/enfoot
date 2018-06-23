@@ -131,11 +131,9 @@ export default class LinkSlider extends Component {
   }
 
   buildLink = (slide) => {
-    console.log('build link', slide);
     var link = '/';
     if (slide && slide.slide_cta) {
       const post = (Array.isArray(slide.slide_cta)) ? slide.slide_cta[0] : slide.slide_cta;
-      console.log('post.post_type ~~>', post.post_type);
       if (post.post_type === 'product') {
         link = `/discover/${post.post_name}`;
       } else if (post.post_type === 'post') {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Consumer } from '../Services/AppProvider';
 import { PostService } from '../Services/Posts';
 import { Slat, BackgroundImage, BREAK_POINTS } from '../Styles';
+import Loader from '../Components/Loader';
 
 
 const StyledSlat = styled(Slat)`
@@ -35,7 +36,7 @@ const TileInner = styled.div`
   align-items: center;
   position: relative;
   height: 100%;
-  @media ${BREAK_POINTS.tablet} {
+  @media ${BREAK_POINTS.mobile} {
     width: 100%;
     height: 400px;
     flex-direction: column;
@@ -47,7 +48,7 @@ const PostImg = styled(BackgroundImage)`
   width: 75%;
   background-attachment: fixed;
   height: 100%;
-  @media ${BREAK_POINTS.tablet} {
+  @media ${BREAK_POINTS.mobile} {
     width: 100%;
   }
 `;
@@ -56,7 +57,7 @@ const PostDetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  @media ${BREAK_POINTS.tablet} {
+  @media ${BREAK_POINTS.mobile} {
     flex-direction: row;
     height: 140px;
     width: 100%;
@@ -108,11 +109,12 @@ class PostTile extends Component {
 
 class Blog extends Component {
   state = {
-    posts: []
+    posts: [],
+    loading: true
   }
 
   componentDidMount() {
-    PostService.getPosts().then(posts => this.setState({ posts }));
+    PostService.getPosts().then(posts => this.setState({ posts, loading: false }));
   }
 
   renderPosts = () => {
@@ -120,6 +122,7 @@ class Blog extends Component {
   }
 
   renderBlog = (state) => {
+    if (state.loading) return <Loader />
     return (
       <StyledSlat>
         {this.renderPosts()}

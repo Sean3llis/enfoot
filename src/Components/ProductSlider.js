@@ -47,9 +47,6 @@ const BackButton = styled(ButtonBack)`
   background-color: white;
   border: none;
   color: ${props => props.theme.b300};
-  @media ${BREAK_POINTS.tablet} {
-    display: none;
-  }
 `;
 
 const NextButton = styled(ButtonNext)`
@@ -62,9 +59,6 @@ const NextButton = styled(ButtonNext)`
   background-color: white;
   border: none;
   color: ${props => props.theme.b300};
-  @media ${BREAK_POINTS.tablet} {
-    display: none;
-  }
 `;
 
 const ProductSlide = styled(BackgroundImage)`
@@ -90,6 +84,15 @@ const StyledSlide = styled(Slide)`
       transform: translateY(0px);
     }
   }
+  @media ${BREAK_POINTS.tablet} {
+    a div:first-child {
+      transform: rotateZ(45deg) translateX(0px) translateY(-20px);
+    }
+    a div:last-child {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
 `;
 
 const SlideTitle = styled.div`
@@ -101,6 +104,26 @@ const SlideTitle = styled.div`
   bottom: 16px;
   transition: transform 0.4s ease-out, opacity 0.5s linear;
   color: ${props => props.theme.b300};
+`;
+
+const ViewAllLink = styled(Link)`
+  font-size: 10px;
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: 2px;
+  margin-top: 18px;
+  position: relative;
+  padding: 6px 18px;
+  &:after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    width: 16px;
+    height: 1px;
+    background-color: ${props => props.theme.white};
+  }
 `;
 
 export default class ProductSlider extends Component {
@@ -123,6 +146,21 @@ export default class ProductSlider extends Component {
     })
   }
 
+  componentDidMount() {
+    
+  }
+
+  calcSlides = () => {
+    const width = window.innerWidth;
+    if (width > 1200) {
+      return 3;
+    } else if (width > 767) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
   render() {
     return (
       <SliderWrapper>
@@ -131,7 +169,7 @@ export default class ProductSlider extends Component {
           naturalSlideWidth={1}
           naturalSlideHeight={1}
           dragEnabled={false}
-          visibleSlides={3}
+          visibleSlides={this.calcSlides()}
           totalSlides={this.props.products.length}
         >
           <Slider>
@@ -143,6 +181,7 @@ export default class ProductSlider extends Component {
         </TrackWrapper>
         <TitleWrapper titleColor={this.props.titleColor}>
           {this.props.title}
+          <ViewAllLink to={`/discover/category/${this.props.categorySlug}`}>VIEW ALL</ViewAllLink>
         </TitleWrapper>
       </SliderWrapper>
     );

@@ -20,10 +20,10 @@ export default class Home extends Component {
               <LinkSlider slides={productState.homePage.acf.slides} />
             </Slat>
             <Slat>
-              <ProductSlider title={'Featured'} products={productState.getProductsByCategory(11)}/>
+              <ProductSlider title={'Featured'} categorySlug={'featured'} products={productState.getProductsByCategoryID(11)}/>
             </Slat>
             <Slat>
-              <ProductSlider titleColor={'#6a7f6e'} titlePlacement={'left'} title={'Cat1'} products={productState.getProductsByCategory(2)} />
+              <ProductSlider title={'Cat1'} titleColor={'#6a7f6e'} titlePlacement={'left'} categorySlug={'cat1'} products={productState.getProductsByCategoryID(2)} />
             </Slat>
           </div>
           );

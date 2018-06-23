@@ -14,7 +14,7 @@ export const theme = {
   linkColor: '#665DAF',
   primary: '#665DAF',
   gradient: 'linear-gradient(45deg, rgba(102,93,175,1) 0%, rgba(135,68,156,1) 100%);',
-  b300: '#1c1c20',
+  b300: '#2b2b38',
   white: '#ffffff',
   offwhite: '#f8f8f8'
 }
@@ -198,6 +198,7 @@ export const Footer = styled.footer`
   right: 0;
   background-color: ${props => props.theme.b300};
   align-self: flex-end;
+  padding: 32px 16px;
   color: ${props => props.theme.white};
 `;
 
@@ -207,6 +208,17 @@ const SlideDownInKeys = keyframes`
   50% {opacity: 0;}
   100% {opacity: 1; transform: none;}
 `;
+
+const WobbleKeys = keyframes`
+  0%, 100% {
+    transform: rotateZ(-12deg);
+  }
+  50% {
+    transform: rotateZ(12deg);
+  }
+`;
+
+export const Wobble = `animation: ${WobbleKeys} ease-in-out 1s`
 
 export const SlideDownIn = `animation: ${SlideDownInKeys} ease-in-out 0.6s;`;
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import EnfootLogo from '../Icons/enfoot';
+import Naner from '../Icons/Naner';
+import { Wobble } from '../Styles';
 
 const LoaderWrapper = styled.div`
   background-color: #ffffff;
@@ -17,11 +19,25 @@ const LoaderWrapper = styled.div`
   align-items: center;
 `;
 
+const StyledNaner = styled.div`
+  width: 70px;
+  position: relative;
+  ${Wobble};
+  animation-iteration-count: infinite;
+  svg {
+    width: 100%;
+  }
+  path {
+    fill: ${props => props.theme.b300};
+  }
+`;
+
 class Loader extends Component {
   render() { 
     return (
       <LoaderWrapper>
         <EnfootLogo />
+        <StyledNaner><Naner /></StyledNaner>
       </LoaderWrapper>
     )
   }
